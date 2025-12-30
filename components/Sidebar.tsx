@@ -4,26 +4,27 @@ import { useRouter } from 'next/navigation';
 import { Card, CardBody, Button } from "@heroui/react";
 import {
   HomeIcon,
-  ChartBarIcon,
-  Cog6ToothIcon,
   UserGroupIcon,
-  ShoppingCartIcon,
-  PlusIcon,
+  ClipboardDocumentCheckIcon,
+  CalendarDaysIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 
 export const Sidebar = () => {
   const router = useRouter();
   const navItems = [
     { name: "Dashboard", icon: HomeIcon, href: "/" },
-    { name: "Vendors", icon: PlusIcon, href: "/vendor" },
-    { name: "Settings", icon: Cog6ToothIcon, href: "/settings" },
+    { name: "Vendors", icon: UserGroupIcon, href: "/vendor" },
+    { name: "Approvals", icon: ClipboardDocumentCheckIcon, href: "/approvals" },
+    { name: "Schedule", icon: CalendarDaysIcon, href: "/schedule" },
+    { name: "Formats", icon: DocumentTextIcon, href: "/format" },
   ];
 
   return (
     <Card className="w-64 h-screen rounded-none shadow-md">
       <CardBody className="p-0">
         <div className="p-4 text-lg font-bold border-b border-divider text-black">
-          Admin Panel
+          Menu
         </div>
         <div className="p-2">
           {navItems.map((item) => (
