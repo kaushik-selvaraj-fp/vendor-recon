@@ -91,7 +91,7 @@ export default function AddVendorPage() {
           <div className="flex justify-center border">
             <div style={{ width: '100%' }}>
               <BBoxAnnotator
-                url="/assets/images/sample-soa.png"
+                url="/assets/images/sample_soa_1.png"
                 inputMethod="select"
                 labels={labels}
                 onChange={(e) => setEntries(e)}
