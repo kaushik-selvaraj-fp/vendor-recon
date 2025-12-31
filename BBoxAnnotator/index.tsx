@@ -394,6 +394,7 @@ const BBoxAnnotator = React.forwardRef<any, Props>(({ url, borderWidth = 2, inpu
                                 }}
                             >
                                 <div
+                                    className='close-icon'
                                     style={{
                                         display: 'block',
                                         textAlign: 'center',
@@ -412,7 +413,7 @@ const BBoxAnnotator = React.forwardRef<any, Props>(({ url, borderWidth = 2, inpu
                                 </div>
                             </div>
                         ) : null}
-                        <div style={{ overflow: 'hidden' }}>{entry.label}</div>
+                        <div className='label-content' style={{ overflow: 'hidden' }}>{entry.label}</div>
                         {selectedId === entry.id ? (
                             <>
                                 <div
@@ -504,6 +505,7 @@ const BBoxAnnotator = React.forwardRef<any, Props>(({ url, borderWidth = 2, inpu
                                     }}
                                 />
                                 <div
+                                    className='selected'
                                     style={{
                                         position: 'absolute',
                                         width: '8px',
@@ -533,6 +535,7 @@ const BBoxAnnotator = React.forwardRef<any, Props>(({ url, borderWidth = 2, inpu
                                     }}
                                 />
                                 <div
+                                    className='selected'
                                     style={{
                                         position: 'absolute',
                                         width: '8px',
@@ -561,6 +564,7 @@ const BBoxAnnotator = React.forwardRef<any, Props>(({ url, borderWidth = 2, inpu
                                     }}
                                 />
                                 <div
+                                    className='selected'
                                     style={{
                                         position: 'absolute',
                                         width: '8px',
@@ -590,6 +594,7 @@ const BBoxAnnotator = React.forwardRef<any, Props>(({ url, borderWidth = 2, inpu
                                     }}
                                 />
                                 <div
+                                    className='selected'
                                     style={{
                                         position: 'absolute',
                                         width: '8px',
@@ -618,6 +623,7 @@ const BBoxAnnotator = React.forwardRef<any, Props>(({ url, borderWidth = 2, inpu
                                     }}
                                 />
                                 <div
+                                    className='selected'
                                     style={{
                                         position: 'absolute',
                                         width: '8px',

@@ -8,7 +8,7 @@ import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 // import { Navbar } from "@/components/navbar";
-
+import { Sidebar } from "@/components/Sidebar";
 import { HeroUIProvider } from "@heroui/system";
 // import {type NextRouter, useRouter} from "next/router";
 
@@ -44,12 +44,15 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-screen">
             <HeroUIProvider>
-              <main className="flex-grow p-6 overflow-auto">
-                <div className="mx-auto max-w-7xl">{children}</div>
-              </main>
+              <div className="min-h-screen bg-gray-50 flex">
+                <Sidebar />
+                <div className="flex-1 p-6">
+                  {children}
+                </div>
+              </div>
             </HeroUIProvider>
           </div>
         </Providers>

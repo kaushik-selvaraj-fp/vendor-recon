@@ -13,7 +13,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Avatar,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
@@ -22,54 +21,54 @@ import {
 import { EyeIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 
 export const RecentOrders = () => {
-  const orders = [
+  const entries = [
     {
-      id: "#12345",
-      customer: "John Doe",
-      amount: "$299.99",
-      status: "completed",
-      avatar: "https://i.pravatar.cc/150?u=1",
+      id: "REC-1001",
+      vendor: "Ming Fa Food",
+      amount: 506.96,
+      status: "reconciled",
+      avatar: "https://i.pravatar.cc/150?u=11",
     },
     {
-      id: "#12346",
-      customer: "Jane Smith",
-      amount: "$159.50",
+      id: "REC-1002",
+      vendor: "Singapore Commercial",
+      amount: 313.05,
       status: "pending",
-      avatar: "https://i.pravatar.cc/150?u=2",
+      avatar: "https://i.pravatar.cc/150?u=12",
     },
     {
-      id: "#12347",
-      customer: "Mike Johnson",
-      amount: "$89.99",
-      status: "processing",
-      avatar: "https://i.pravatar.cc/150?u=3",
+      id: "REC-1003",
+      vendor: "The Seafood Company",
+      amount: 670.46,
+      status: "discrepancy",
+      avatar: "https://i.pravatar.cc/150?u=13",
     },
     {
-      id: "#12348",
-      customer: "Sarah Wilson",
-      amount: "$449.00",
-      status: "completed",
-      avatar: "https://i.pravatar.cc/150?u=4",
+      id: "REC-1004",
+      vendor: "YIHAI (SINGAPORE) FOOD PTE",
+      amount: 193.91,
+      status: "reconciled",
+      avatar: "https://i.pravatar.cc/150?u=14",
     },
     {
-      id: "#12349",
-      customer: "Tom Brown",
-      amount: "$199.99",
-      status: "cancelled",
-      avatar: "https://i.pravatar.cc/150?u=5",
+      id: "REC-1005",
+      vendor: "Acme Supplies",
+      amount: 432.19,
+      status: "flagged",
+      avatar: "https://i.pravatar.cc/150?u=15",
     },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "completed":
+      case "reconciled":
         return "success";
       case "pending":
         return "warning";
-      case "processing":
-        return "primary";
-      case "cancelled":
+      case "discrepancy":
         return "danger";
+      case "flagged":
+        return "secondary";
       default:
         return "default";
     }
@@ -79,7 +78,7 @@ export const RecentOrders = () => {
     <Card className="h-full">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-center w-full">
-          <h3 className="text-lg font-semibold">Recent Orders</h3>
+              <h3 className="text-lg font-semibold">Recent Reconciliations</h3>
           <Button
             endContent={<EyeIcon className="h-4 w-4" />}
             size="sm"
@@ -92,30 +91,28 @@ export const RecentOrders = () => {
       <CardBody className="pt-0">
         <Table removeWrapper aria-label="Recent orders table">
           <TableHeader>
-            <TableColumn>ORDER</TableColumn>
-            <TableColumn>CUSTOMER</TableColumn>
+            <TableColumn>VENDOR</TableColumn>
             <TableColumn>AMOUNT</TableColumn>
             <TableColumn>STATUS</TableColumn>
             <TableColumn>ACTION</TableColumn>
           </TableHeader>
           <TableBody>
-            {orders.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell className="font-medium">{order.id}</TableCell>
+            {entries.map((entry) => (
+              <TableRow key={entry.id}>
                 <TableCell>
-                  <div className="flex items-center gap-2">
-                    <Avatar size="sm" src={order.avatar} />
-                    <span>{order.customer}</span>
+                  <div className="flex flex-col">
+                    <span className="font-medium">{entry.vendor}</span>
+                    <span className="text-xs text-default-500">{entry.id}</span>
                   </div>
                 </TableCell>
-                <TableCell className="font-medium">{order.amount}</TableCell>
+                <TableCell className="font-medium">${entry.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</TableCell>
                 <TableCell>
                   <Chip
-                    color={getStatusColor(order.status)}
+                    color={getStatusColor(entry.status)}
                     size="sm"
                     variant="flat"
                   >
-                    {order.status}
+                    {entry.status}
                   </Chip>
                 </TableCell>
                 <TableCell>
@@ -127,9 +124,9 @@ export const RecentOrders = () => {
                     </DropdownTrigger>
                     <DropdownMenu>
                       <DropdownItem key={"1"}>View Details</DropdownItem>
-                      <DropdownItem key={"2"}>Edit Order</DropdownItem>
+                      <DropdownItem key={"2"}>Mark Reconciled</DropdownItem>
                       <DropdownItem key={"3"} className="text-danger">
-                        Cancel Order
+                        Flag
                       </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>

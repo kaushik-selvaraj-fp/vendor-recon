@@ -42,6 +42,8 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   PlusIcon,
+  ExclamationTriangleIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
   LineChart,
@@ -51,6 +53,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
   PieChart,
   Pie,
   Cell,
@@ -97,40 +100,35 @@ export default function AdminDashboard() {
     setCurrentView('vendors-list');
   };
 
-  const salesData = [
-    { name: "Jan", sales: 4000, revenue: 2400 },
-    { name: "Feb", sales: 3000, revenue: 1398 },
-    { name: "Mar", sales: 2000, revenue: 9800 },
-    { name: "Apr", sales: 2780, revenue: 3908 },
-    { name: "May", sales: 1890, revenue: 4800 },
-    { name: "Jun", sales: 2390, revenue: 3800 },
-    { name: "Jul", sales: 3490, revenue: 4300 },
+  const monthlyTrendData = [
+    { month: "Jan 2025", totalReconciliations: 45, discrepanciesFound: 12, matchedInvoices: 230, totalVariance: 15000 },
+    { month: "Feb 2025", totalReconciliations: 52, discrepanciesFound: 15, matchedInvoices: 280, totalVariance: 22000 },
+    { month: "Mar 2025", totalReconciliations: 48, discrepanciesFound: 10, matchedInvoices: 265, totalVariance: 18000 },
+    { month: "Apr 2025", totalReconciliations: 61, discrepanciesFound: 18, matchedInvoices: 310, totalVariance: 25000 },
+    { month: "May 2025", totalReconciliations: 58, discrepanciesFound: 14, matchedInvoices: 295, totalVariance: 20000 },
+    { month: "Jun 2025", totalReconciliations: 65, discrepanciesFound: 11, matchedInvoices: 340, totalVariance: 16000 },
   ];
 
-  const categoryData = [
-    { name: "Electronics", value: 400, color: "#0070f3" },
-    { name: "Clothing", value: 300, color: "#7c3aed" },
-    { name: "Home", value: 200, color: "#f59e0b" },
-    { name: "Books", value: 100, color: "#ef4444" },
+  const reconStatusData = [
+    { name: "Reconciled", value: 400, color: "#10b981" },
+    { name: "Pending", value: 300, color: "#f59e0b" },
+    { name: "Discrepancy", value: 200, color: "#ef4444" },
+    { name: "Flagged", value: 100, color: "#7c3aed" },
   ];
 
   const topProducts = [
-    { name: "iPhone 15 Pro", sales: 1234, revenue: "$1,234,000", trend: 12 },
-    { name: "MacBook Air M2", sales: 856, revenue: "$856,000", trend: 8 },
-    { name: "AirPods Pro", sales: 2341, revenue: "$468,200", trend: -3 },
-    { name: "iPad Pro", sales: 567, revenue: "$567,000", trend: 15 },
+    { name: "Ming Fa Food", sales: 1234, revenue: "$1,234,000", trend: 12 },
+    { name: "Singapore Commercial", sales: 856, revenue: "$856,000", trend: 8 },
+    { name: "The Seadfood Compnay", sales: 2341, revenue: "$468,200", trend: -3 },
+    { name: "YIHAI (SINGAPORE) FOOD PTE", sales: 567, revenue: "$567,000", trend: 15 },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar />
       <div className="flex-1 p-6">
-        {currentView === 'dashboard' && (
-          <>
-            {/* Header */}
-            <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-black">Dashboard</h1>
+            <h1 className="text-2xl font-bold text-black">Vendor Recon Dashboard</h1>
             <p className="text-default-600">Welcome back, Admin!</p>
           </div>
           <div className="flex items-center gap-3">
@@ -152,73 +150,76 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <StatsCard
             change={12.5}
-            color="success"
+            color="warning"
             icon={CurrencyDollarIcon}
-            title="Total Revenue"
-            value="$54,239"
+            title="Total Variance Amount"
+            value={-54239}
           />
           <StatsCard
             change={8.2}
             color="primary"
-            icon={ShoppingCartIcon}
-            title="Total Orders"
+            icon={ExclamationTriangleIcon}
+            title="Total Discrepancies"
             value="1,423"
           />
           <StatsCard
             change={-2.1}
             color="warning"
             icon={UserGroupIcon}
-            title="Total Users"
+            title="Pending Reconciliations"
             value="12,847"
           />
           <StatsCard
             change={15.3}
             color="secondary"
-            icon={EyeIcon}
-            title="Page Views"
-            value="89,342"
+            icon={CheckCircleIcon}
+            title="Completion Rate"
+            value="89.34%"
           />
         </div>
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <div className="lg:col-span-2">
-            <ChartCard title="Sales Overview">
-              <ResponsiveContainer height={300} width="100%">
-                <LineChart data={salesData}>
+            <ChartCard title="Monthly Reconciliation Trends">
+              <ResponsiveContainer height={320} width="100%">
+                <LineChart data={monthlyTrendData} margin={{ top: 10, right: 40, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    dataKey="sales"
-                    stroke="#0070f3"
-                    strokeWidth={2}
-                    type="monotone"
-                  />
-                  <Line
-                    dataKey="revenue"
-                    stroke="#7c3aed"
-                    strokeWidth={2}
-                    type="monotone"
-                  />
+                  <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                  <YAxis yAxisId="y-axis-count" tick={{ fontSize: 12 }} label={{ value: 'Count', angle: -90, position: 'insideLeft', style: { fontSize: 12 } }} />
+                  <YAxis yAxisId="y-axis-amount" orientation="right" tick={{ fontSize: 12 }} label={{ value: 'Amount ($)', angle: 90, position: 'insideRight', style: { fontSize: 12 } }} tickFormatter={(val) => `$${Number(val).toLocaleString()}`} />
+                  <Tooltip formatter={(value: any, name?: string) => {
+                    const displayName = name ?? '';
+                    // If this series is the variance series, format as currency
+                    if (typeof value === 'number' && displayName.toLowerCase().includes('variance')) {
+                      return [`$${Number(value).toLocaleString()}`, displayName];
+                    }
+                    // Otherwise return the value as-is (counts)
+                    return [value, displayName];
+                  }} wrapperStyle={{ fontSize: 12 }} contentStyle={{ fontSize: 12 }} />
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
+
+                  <Line yAxisId="y-axis-count" type="monotone" dataKey="totalReconciliations" name="Total Reconciliations" stroke="#4A90E2" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
+                  <Line yAxisId="y-axis-count" type="monotone" dataKey="discrepanciesFound" name="Discrepancies Found" stroke="#E74C3C" strokeWidth={2} dot={false} />
+                  <Line yAxisId="y-axis-count" type="monotone" dataKey="matchedInvoices" name="Matched Invoices" stroke="#7ED321" strokeWidth={2} dot={false} />
+                  <Line yAxisId="y-axis-amount" type="monotone" dataKey="totalVariance" name="Total Variance ($)" stroke="#F5A623" strokeWidth={2} dot={false} strokeDasharray="5 5" />
                 </LineChart>
               </ResponsiveContainer>
             </ChartCard>
           </div>
 
           <div>
-            <ChartCard title="Sales by Category">
+            <ChartCard title="Reconciliation Status">
               <ResponsiveContainer height={300} width="100%">
                 <PieChart>
                   <Pie
                     cx="50%"
                     cy="50%"
-                    data={categoryData}
+                    data={reconStatusData}
                     dataKey="value"
                     outerRadius={80}
                   >
-                    {categoryData.map((entry, index) => (
+                    {reconStatusData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
@@ -226,7 +227,7 @@ export default function AdminDashboard() {
                 </PieChart>
               </ResponsiveContainer>
               <div className="mt-4 space-y-2">
-                {categoryData.map((item) => (
+                {reconStatusData.map((item) => (
                   <div
                     key={item.name}
                     className="flex items-center justify-between"
@@ -253,10 +254,10 @@ export default function AdminDashboard() {
           <Card>
             <CardHeader className="pb-3">
               <div className="flex justify-between items-center w-full">
-                <h3 className="text-lg font-semibold">Top Products</h3>
+                <h3 className="text-lg font-semibold">Vendors</h3>
                 <Button size="sm" variant="light" onPress={onOpen}>
                   <PlusIcon className="h-4 w-4 mr-1" />
-                  Add Product
+                  Add Vendor
                 </Button>
               </div>
             </CardHeader>
@@ -270,7 +271,7 @@ export default function AdminDashboard() {
                     <div className="flex-1">
                       <h4 className="font-medium">{product.name}</h4>
                       <p className="text-sm text-default-600">
-                        {product.sales} sales
+                        {product.sales} Invoices
                       </p>
                     </div>
                     <div className="text-right">
@@ -325,66 +326,6 @@ export default function AdminDashboard() {
             </ModalFooter>
           </ModalContent>
         </Modal>
-        </>
-        )}
-        {(currentView === 'add-vendor' || currentView === 'edit-vendor') && (
-          <Card className="max-w-md mx-auto mt-10">
-            <CardHeader>
-              <h2 className="text-xl font-bold">{selectedVendor ? 'Edit Vendor' : 'Add Vendor'}</h2>
-            </CardHeader>
-            <CardBody>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <Input
-                  label="Vendor Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  required
-                />
-                <Input
-                  label="Contact Email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  required
-                />
-                <Input
-                  label="Phone"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                />
-                <Button type="submit" color="primary">{selectedVendor ? 'Update' : 'Save'}</Button>
-              </form>
-            </CardBody>
-          </Card>
-        )}
-        {currentView === 'vendors-list' && (
-          <div>
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-2xl font-bold">Vendors</h1>
-              <Button onClick={() => { setSelectedVendor(null); setFormData({name:'',email:'',phone:''}); setCurrentView('add-vendor'); }}>Add Vendor</Button>
-            </div>
-            <Table>
-              <TableHeader>
-                <TableColumn>Name</TableColumn>
-                <TableColumn>Email</TableColumn>
-                <TableColumn>Phone</TableColumn>
-                <TableColumn>Actions</TableColumn>
-              </TableHeader>
-              <TableBody>
-                {vendors.map((vendor) => (
-                  <TableRow key={vendor.id}>
-                    <TableCell>{vendor.name}</TableCell>
-                    <TableCell>{vendor.email}</TableCell>
-                    <TableCell>{vendor.phone}</TableCell>
-                    <TableCell>
-                      <Button size="sm" onClick={() => { setSelectedVendor(vendor); setFormData({ name: vendor.name, email: vendor.email, phone: vendor.phone }); setCurrentView('edit-vendor'); }}>Edit</Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
       </div>
     </div>
   );
