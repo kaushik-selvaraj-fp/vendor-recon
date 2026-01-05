@@ -38,3 +38,9 @@ pnpm-lock.yaml
 yarn.lock
 package-lock.json
 bun.lockb
+
+# python / environment variables
+venv/
+.venv/
+env/
+.env
